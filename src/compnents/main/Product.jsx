@@ -1,15 +1,35 @@
  
 
-import { useState } from "react";
+ 
+import { useContext } from "react";
 import { getImage } from "../../utils/cine-utility.js";
 import Rating from "./Rating.jsx";
+import { CartContext } from "../../context/index.js";
+
 /// import data
 
 export default function Product({ item }) {
   
+ const {cartData,setCartdData} = useContext(CartContext)
   
- const [selectProduct,setSelectProduct] =useState(null)
- const handleProductSelcetion =()=>{}
+ const handleAddToCart =(e,item)=>{
+  e.stopPropagation()
+  const find = cartData.find((cart)=>{
+    return cart.id === item.id 
+  })
+  if(!find){
+    setCartdData([...cartData,item])
+  }
+   
+ }
+
+ const handleRemovedToCart =(e,id)=>{
+  
+  const updatedCart = cartData.filter(item => item.id !== id);
+  setCartdData(updatedCart); 
+
+
+ }
 
   return (
     <div className="bg-gray-100 rounded-lg overflow-hidden transition-transform hover:scale-[1.02] duration-300">
@@ -33,14 +53,14 @@ export default function Product({ item }) {
         <p className="font-bold">${item.price} </p>
  
           <button
-            onClick={()=>handleProductSelcetion(item)}
+            onClick={(e)=>handleAddToCart(e,item)}
             className="w-full mt-2 bg-gray-800 py-1 text-gray-100 rounded flex items-center justify-center"
           >
             Add to Cart
           </button>
          
           <button
-           
+             onClick={(e)=>handleRemovedToCart(e,item.id)}
             className="w-full mt-2 bg-red-800 py-1 text-gray-100 rounded flex items-center justify-center"
           >
             Remove from Cart
