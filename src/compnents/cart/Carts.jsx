@@ -4,8 +4,9 @@ import Orders from './Orders'
 import { CartContext } from '../../context'
 
 export default function Carts() {
-  const {cartData} = useContext(CartContext)
-  console.log(cartData)
+  const {state} = useContext(CartContext)
+  console.log(state)
+ 
   return (
     <div class="lg:col-span-1">
         <div class="bg-white rounded-lg p-6 border border-gray-200">
@@ -13,7 +14,7 @@ export default function Carts() {
 
           {/* <!-- Cart Item 1 --> */}
           {
-            cartData.map((item,index)=>{
+            state.cartData.map((item,index)=>{
               return(  <Cart key={index} item={item}/>)
             })
           }

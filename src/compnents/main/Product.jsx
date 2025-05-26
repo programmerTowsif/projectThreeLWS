@@ -10,23 +10,30 @@ import { CartContext } from "../../context/index.js";
 
 export default function Product({ item }) {
   
- const {cartData,setCartdData} = useContext(CartContext)
+ const {state,dispatch} = useContext(CartContext)
   
  const handleAddToCart =(e,item)=>{
   e.stopPropagation()
-  const find = cartData.find((cart)=>{
+  const find = state.cartData.find((cart)=>{
     return cart.id === item.id 
   })
   if(!find){
-    setCartdData([...cartData,item])
+     dispatch({
+      type: "Add_TO_CART",
+      payload:{
+        ...item
+      }
+     })
   }
    
  }
 
- const handleRemovedToCart =(e,id)=>{
+ const handleRemovedToCart =(e,item)=>{
   
-  const updatedCart = cartData.filter(item => item.id !== id);
-  setCartdData(updatedCart); 
+   dispatch({
+    type:"REMOVE_FROM_CART",
+   payload:item
+   })
 
 
  }
@@ -60,7 +67,7 @@ export default function Product({ item }) {
           </button>
          
           <button
-             onClick={(e)=>handleRemovedToCart(e,item.id)}
+             onClick={(e)=>handleRemovedToCart(e,item)}
             className="w-full mt-2 bg-red-800 py-1 text-gray-100 rounded flex items-center justify-center"
           >
             Remove from Cart

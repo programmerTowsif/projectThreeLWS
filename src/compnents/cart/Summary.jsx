@@ -2,9 +2,9 @@ import React, { useContext } from 'react'
 import { CartContext } from '../../context'
 
 export default function Summary() {
-  const{cartData} =  useContext(CartContext)
-  console.log({cartData})
-  const totalPrice = cartData.reduce((sum, item) => sum + item.price, 0);
+  const{state} =  useContext(CartContext)
+  console.log(state.cartData)
+  const totalPrice = state.cartData.reduce((sum, item) => sum + item.price, 0);
     const discountPercentage = 20;
     const discountAmount = (totalPrice*discountPercentage)/100;
     const finalPrice = totalPrice -discountAmount;

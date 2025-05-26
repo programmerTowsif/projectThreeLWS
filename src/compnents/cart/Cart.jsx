@@ -5,13 +5,13 @@ import { getImage } from '../../utils/cine-utility'
 import { CartContext } from '../../context'
  
 export default function Cart({item}) {
- const {cartData,setCartdData}= useContext(CartContext
+ const {state,dispatch}= useContext(CartContext
   )
-  const handleRemoveFromCartItem=(id)=>{
-    const updateCart = cartData.filter((item)=>{
-      return item.id !== id
-    })
-   setCartdData(updateCart)
+  const handleRemoveFromCartItem=(item)=>{
+    dispatch({
+      type:"REMOVE_FROM_CART",
+     payload:item
+     })
   }
    
   return (
@@ -23,7 +23,7 @@ export default function Cart({item}) {
     <div class="flex-grow">
       <div class="flex justify-between">
         <h3 class="font-medium">{item.title}</h3>
-        <span class="text-red-500 text-sm" onClick={()=>handleRemoveFromCartItem(item.id)}>×</span>
+        <span class="text-red-500 text-sm" onClick={()=>handleRemoveFromCartItem(item)}>×</span>
       </div>
       <p class="text-sm text-gray-500">Size: {item.size}</p>
       <p class="text-sm text-gray-500">Color: {item.color}</p>
